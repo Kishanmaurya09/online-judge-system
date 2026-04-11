@@ -13,10 +13,12 @@ connectDB();
 const app = express();
 
 app.use(cors({
-    origin: "https://online-judge-system.vercel.app",
-    method: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true
-}))
+  origin: [
+    "http://localhost:5173",
+    "https://online-judge-system.vercel.app"
+  ],
+  credentials: true
+}));
 
 app.use(express.json());
 app.use("/api/users", userRoutes);
