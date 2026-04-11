@@ -32,60 +32,57 @@ function Problems() {
   }
 
   return (
-    <div className="p-6 text-white">
-      <h1 className="text-3xl font-bold mb-6">Problems</h1>
+    <div className="p-8 text-white max-w-5xl mx-auto">
+      <h1 className="text-4xl font-bold mb-6">Problems</h1>
 
-      {/* 🔍 Search */}
+      {/* Search */}
       <input
         type="text"
-        placeholder="Search problem..."
-        className="mb-6 p-3 w-full rounded-lg bg-[#161b22] border border-gray-700 focus:outline-none"
+        placeholder="Search problems..."
+        className="mb-6 p-3 w-full rounded-md bg-[#1e293b] border border-gray-600 outline-none"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      {/* 📋 Table */}
-      <div className="overflow-x-auto">
-        <table className="w-full border border-gray-700 rounded-lg overflow-hidden">
-          <thead className="bg-[#161b22] text-gray-300">
-            <tr>
-              <th className="p-3 text-left">#</th>
-              <th className="p-3 text-left">Title</th>
-              <th className="p-3 text-left">Difficulty</th>
-            </tr>
-          </thead>
+      {/* Table */}
+      <table className="w-full border border-gray-700 rounded-lg overflow-hidden">
+        <thead className="bg-[#1e293b] text-gray-300">
+          <tr>
+            <th className="p-4 text-left w-16">#</th>
+            <th className="p-4 text-left">Title</th>
+            <th className="p-4 text-left w-40">Difficulty</th>
+          </tr>
+        </thead>
 
-          <tbody>
-            {filteredProblems.map((p, index) => (
-              <tr
-                key={p._id}
-                className="border-t border-gray-700 hover:bg-[#1f2937] transition cursor-pointer"
-                onClick={() => navigate(`/problems/${p._id}`)}
-              >
-                <td className="p-3 text-gray-400">{index + 1}</td>
+        <tbody>
+          {filteredProblems.map((p, index) => (
+            <tr
+              key={p._id}
+              className="border-t border-gray-700 hover:bg-[#334155] transition cursor-pointer"
+              onClick={() => navigate(`/problems/${p._id}`)}
+            >
+              <td className="p-4 text-gray-400">{index + 1}</td>
 
-                <td className="p-3 text-blue-400 hover:underline">
-                  {p.title}
-                </td>
+              <td className="p-4 text-blue-400 font-medium">
+                {p.title}
+              </td>
 
-                <td className="p-3">
-                  <span
-                    className={`px-2 py-1 rounded text-sm font-semibold ${
-                      p.difficulty === "easy"
-                        ? "bg-green-600"
-                        : p.difficulty === "medium"
+              <td className="p-4">
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-semibold ${p.difficulty === "easy"
+                      ? "bg-green-600"
+                      : p.difficulty === "medium"
                         ? "bg-yellow-500 text-black"
                         : "bg-red-600"
                     }`}
-                  >
-                    {p.difficulty}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+                >
+                  {p.difficulty}
+                </span>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
