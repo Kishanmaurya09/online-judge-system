@@ -32,59 +32,49 @@ function Problems() {
   }
 
   return (
-    <div className="p-8 text-white max-w-5xl mx-auto">
-      <h1 className="text-4xl font-bold mb-6">Problems</h1>
+  <div className="p-8 text-white max-w-4xl mx-auto">
+    <h1 className="text-3xl font-bold mb-6">Problem List</h1>
 
-      {/* Search */}
-      <input
-        type="text"
-        placeholder="Search problems..."
-        className="mb-6 p-3 w-full rounded-md bg-[#1e293b] border border-gray-600 outline-none"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-      />
+    {/* Search */}
+    <input
+      type="text"
+      placeholder="Search questions..."
+      className="mb-6 p-3 w-full rounded-full bg-[#161b22] border border-gray-700 outline-none"
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+    />
 
-      {/* Table */}
-      <table className="w-full border border-gray-700 rounded-lg overflow-hidden">
-        <thead className="bg-[#1e293b] text-gray-300">
-          <tr>
-            <th className="p-4 text-left w-16">#</th>
-            <th className="p-4 text-left">Title</th>
-            <th className="p-4 text-left w-40">Difficulty</th>
-          </tr>
-        </thead>
+    {/* List */}
+    <div className="space-y-3">
+      {filteredProblems.map((p, index) => (
+        <div
+          key={p._id}
+          onClick={() => navigate(`/problems/${p._id}`)}
+          className="flex items-center justify-between px-5 py-4 rounded-lg bg-[#161b22] hover:bg-[#1f2937] transition cursor-pointer"
+        >
+          {/* Left */}
+          <div className="flex items-center gap-4">
+            <span className="text-gray-400 w-6">{index + 1}.</span>
+            <span className="font-medium">{p.title}</span>
+          </div>
 
-        <tbody>
-          {filteredProblems.map((p, index) => (
-            <tr
-              key={p._id}
-              className="border-t border-gray-700 hover:bg-[#334155] transition cursor-pointer"
-              onClick={() => navigate(`/problems/${p._id}`)}
-            >
-              <td className="p-4 text-gray-400">{index + 1}</td>
-
-              <td className="p-4 text-blue-400 font-medium">
-                {p.title}
-              </td>
-
-              <td className="p-4">
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-semibold ${p.difficulty === "easy"
-                      ? "bg-green-600"
-                      : p.difficulty === "medium"
-                        ? "bg-yellow-500 text-black"
-                        : "bg-red-600"
-                    }`}
-                >
-                  {p.difficulty}
-                </span>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+          {/* Right */}
+          <span
+            className={`text-sm font-semibold ${
+              p.difficulty === "easy"
+                ? "text-green-400"
+                : p.difficulty === "medium"
+                ? "text-yellow-400"
+                : "text-red-400"
+            }`}
+          >
+            {p.difficulty}
+          </span>
+        </div>
+      ))}
     </div>
-  )
+  </div>
+)
 }
 
 export default Problems
