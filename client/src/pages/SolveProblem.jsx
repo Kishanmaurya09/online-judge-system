@@ -9,7 +9,7 @@ import {
   MenuItem,
   Select
 } from "@mui/material"
-import API from "../api/axios"
+// import API from "../api/axios"
 
 function SolveProblem() {
   const { id } = useParams()
@@ -29,19 +29,11 @@ function SolveProblem() {
 
       const token = localStorage.getItem("token")
 
-      const res = await axios.post(
-        "http://localhost:5000/api/submissions/run",
-        {
-          code,
-          language: "python",
-          input: customInput || "5 7"   // 
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
-      )
+      const res = await API.post("/submissions/run", {
+  code,
+  language: "python",
+  input: customInput || "5 7"
+})
 
       setOutput(res.data.output)
     } catch (err) {
@@ -59,11 +51,10 @@ function SolveProblem() {
       setVerdict("")
 
       const res = await API.post("/submissions", {
-        problemId: id,
-        code: code,
-        language: language,
-        contestId
-      })
+  problemId: id,
+  code: code,
+  language: language
+})
 
       setVerdict(res.data.status || "Submitted")
     } catch (err) {
