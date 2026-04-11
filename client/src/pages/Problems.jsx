@@ -38,43 +38,56 @@ function Problems() {
   }
 
   return (
-    <Container sx={{ mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
-        Problems
-      </Typography>
+    <div className="p-6 text-white">
+      <h1 className="text-3xl mb-4">Problems</h1>
 
-      {loading ? (
-        <CircularProgress />
-      ) : (
-        <Grid container spacing={2}>
-          {problems.map((p) => (
-            <Grid item xs={12} key={p._id}>
-              <Card
-                component={Link}
-                to={`/problems/${p._id}`}
-                sx={{
-                  textDecoration: "none",
-                  "&:hover": { transform: "scale(1.01)" },
-                  transition: "0.2s"
-                }}
-              >
-                <CardContent>
-                  <Typography variant="h6">{p.title}</Typography>
+      {/* 🔍 Search Bar */}
+      <input
+        type="text"
+        placeholder="Search problem..."
+        className="mb-4 p-2 w-full rounded bg-gray-800 border border-gray-600"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+      />
 
-                  <Chip
-                    label={p.difficulty}
-                    color={difficultyColor(p.difficulty)}
-                    size="small"
-                    sx={{ mt: 1 }}
-                  />
-                </CardContent>
-              </Card>
-            </Grid>
+      {/* 📋 Table */}
+      <table className="w-full border border-gray-700">
+        <thead className="bg-gray-800">
+          <tr>
+            <th className="p-2 border">#</th>
+            <th className="p-2 border">Title</th>
+            <th className="p-2 border">Difficulty</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {filteredProblems.map((p, index) => (
+            <tr
+              key={p._id}
+              className="hover:bg-gray-700 cursor-pointer"
+              onClick={() => window.location.href = `/problems/${p._id}`}
+            >
+              <td className="p-2 border">{index + 1}</td>
+              <td className="p-2 border">{p.title}</td>
+              <td className="p-2 border">
+                <span
+                  className={`px-2 py-1 rounded ${
+                    p.difficulty === "easy"
+                      ? "bg-green-500"
+                      : p.difficulty === "medium"
+                      ? "bg-yellow-500"
+                      : "bg-red-500"
+                  }`}
+                >
+                  {p.difficulty}
+                </span>
+              </td>
+            </tr>
           ))}
-        </Grid>
-      )}
-    </Container>
-  )
-}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
 export default Problems
